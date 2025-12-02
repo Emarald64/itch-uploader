@@ -6,16 +6,6 @@ var gameName:="test"
 
 var exportPlugin:EditorExportPlugin
 
-func _enable_plugin() -> void:
-	# Add autoloads here.
-	#print('enabled plugin')
-	pass
-
-
-func _disable_plugin() -> void:
-	# Remove autoloads here.
-	pass
-
 func _enter_tree() -> void:
 	exportPlugin=preload("res://addons/itchio_uploader/export_plugin.gd").new()
 	add_export_plugin(exportPlugin)

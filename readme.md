@@ -1,0 +1,1 @@
+/home/agiller/Documents/godot/itch-uploader/addons/itchio_uploader/readme.md
