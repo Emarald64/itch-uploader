@@ -2,28 +2,39 @@
 extends AcceptDialog
 class_name ItchSettings
 
-const settingsPath='res://addons/itchio_uploader/settings'
+const settingsPath='res://addons/itchio_uploader/settings.txt'
+
+static var username:=""
+static var gameName:=""
+static var butlerPath:=""
+
+static func _static_init() -> void:
+	loadSettingsFromFile()
 
 func _ready() -> void:
-	# Read exising settings
-	var file=FileAccess.open(settingsPath,FileAccess.READ)
-	%Username.text=file.get_line()
-	%"Project Name".text=file.get_line()
-	%"Butler Path".text=file.get_line()
+	%Username.text=username
+	%"Game Name".text=gameName
+	%"Butler Path".text=butlerPath
 
-func pressedOK()->void:
+static func loadSettingsFromFile()->void:
+	# Read exising settings
+	if FileAccess.file_exists(settingsPath):
+		var file=FileAccess.open(settingsPath,FileAccess.READ)
+		username=file.get_line()
+		gameName=file.get_line()
+		butlerPath=file.get_line()
+		file.close()
+
+static func saveSettingsToFile()->void:
 	#Save settings to file
 	var file=FileAccess.open(settingsPath,FileAccess.WRITE)
-	file.store_line(%Username.text)
-	file.store_line(%"Project Name".text)
-	file.store_line(%"Butler Path".text)
+	file.store_line(username)
+	file.store_line(gameName)
+	file.store_line(butlerPath)
 	file.close()
 
-static func setSetting(index:int,value:String):
-	var file=FileAccess.open(settingsPath,FileAccess.READ)
-	var settings=file.get_as_text().split('\n')
-	settings[index]=value
-	file.close()
-	file=FileAccess.open(settingsPath,FileAccess.WRITE)
-	for setting in settings:
-		file.store_line(setting)
+func pressedOK()->void:
+	username=%Username.text
+	gameName=%"Game Name".text
+	butlerPath=%"Butler Path".text
+	saveSettingsToFile()

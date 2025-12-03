@@ -11,46 +11,38 @@ visible = true
 dialog_close_on_escape = false
 script = ExtResource("1_axtyh")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="GridContainer" type="GridContainer" parent="."]
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 292.0
 offset_bottom = 85.0
+columns = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="GridContainer"]
 layout_mode = 2
 text = "Username"
 
-[node name="Username" type="TextEdit" parent="VBoxContainer/HBoxContainer"]
+[node name="Username" type="TextEdit" parent="GridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "xanderath"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
+[node name="Label2" type="Label" parent="GridContainer"]
 layout_mode = 2
 text = "Game Name"
 
-[node name="Project Name" type="TextEdit" parent="VBoxContainer/HBoxContainer2"]
+[node name="Game Name" type="TextEdit" parent="GridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "test"
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer3"]
+[node name="Label3" type="Label" parent="GridContainer"]
 layout_mode = 2
 text = "Butler Path"
 
-[node name="Butler Path" type="TextEdit" parent="VBoxContainer/HBoxContainer3"]
+[node name="Butler Path" type="TextEdit" parent="GridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3

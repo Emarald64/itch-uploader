@@ -1,8 +1,8 @@
 @tool
 extends EditorPlugin
 
-var username:="Xanderath"
-var gameName:="test"
+#var username:="Xanderath"
+#var gameName:="test"
 
 var exportPlugin:EditorExportPlugin
 
@@ -111,4 +111,5 @@ func downloadFinished(result, response_code, headers, body)->void:
 	else:
 		butlerFile='butler.exe'
 	#Store butler path
-	ItchSettings.setSetting(3,ProjectSettings.globalize_path(butlerFolder+butlerFolder))
+	ItchSettings.butlerPath=ProjectSettings.globalize_path(butlerFolder+butlerFile)
+	ItchSettings.saveSettingsToFile()
