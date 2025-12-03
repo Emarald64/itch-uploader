@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://dlr8uuil84tfv"]
+
+[ext_resource type="Script" uid="uid://docm4abuuc6s8" path="res://addons/itchio_uploader/itchio_login/itchlogin.gd" id="1_ejt4t"]
+
+[node name="Itch io login" type="AcceptDialog"]
+oversampling_override = 1.0
+title = "itch.io login"
+initial_position = 4
+size = Vector2i(500, 159)
+visible = true
+ok_button_text = "Close"
+script = ExtResource("1_ejt4t")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 492.0
+offset_bottom = 110.0
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+text = "A page to log into itch.io should have opened in your browser. If it didn't click the button below."
+autowrap_mode = 2
+
+[node name="LinkButton" type="LinkButton" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Loading"
+underline = 2
+
+[node name="Login check" type="Timer" parent="."]
