@@ -1,12 +1,11 @@
 @tool
 extends EditorPlugin
-
 #var username:="Xanderath"
 #var gameName:="test"
 
 var exportPlugin:EditorExportPlugin
 
-var butlerPath:="/home/agiller/Documents/butler-linux-amd64/butler"
+#var butlerPath:="/home/agiller/Documents/butler-linux-amd64/butler"
 
 const itchLoginPopup=preload("res://addons/itchio_uploader/itchio_login/itchlogin.tscn")
 const itchSettingsPopup=preload("res://addons/itchio_uploader/itchio_settings/itch_settings.tscn")
@@ -19,8 +18,7 @@ func _disable_plugin() -> void:
 
 func _enter_tree() -> void:
 	exportPlugin=preload("res://addons/itchio_uploader/export_plugin.gd").new()
-	
-	exportPlugin.butlerPath = butlerPath
+	exportPlugin.editorPlugin=self
 	add_export_plugin(exportPlugin)
 	
 	add_tool_menu_item("Log into itch.io",itchIoLogin)

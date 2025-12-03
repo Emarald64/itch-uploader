@@ -15,11 +15,12 @@ func _ready()->void:
 	$"Login check".start()
 	await get_tree().create_timer(0.5).timeout
 	var butlerOutput=butlerLoginPipe['stdio'].get_as_text()
-	var urlStartIndex=butlerOutput.find("https://itch.io/user/")
+	var urlStartIndex=butlerOutput.find("https://itch.io/")
 	var urlEndIndex=butlerOutput.find(' ',urlStartIndex)
 	var url=butlerOutput.substr(urlStartIndex,urlEndIndex-urlStartIndex)
 	if url=="":
 		$VBoxContainer/LinkButton.text='Error'
+		$VBoxContainer/Label.text=butlerLoginPipe['stdio'].get_as_text()+butlerLoginPipe['stderr'].get_as_text()
 	else:
 		$VBoxContainer/LinkButton.text='Link'
 		$VBoxContainer/LinkButton.url=url

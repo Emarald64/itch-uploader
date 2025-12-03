@@ -6,8 +6,10 @@
 oversampling_override = 1.0
 title = "itch.io login"
 initial_position = 4
-size = Vector2i(500, 159)
+size = Vector2i(500, 160)
 visible = true
+exclusive = false
+minimize_disabled = false
 ok_button_text = "Close"
 script = ExtResource("1_ejt4t")
 
@@ -15,18 +17,17 @@ script = ExtResource("1_ejt4t")
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 492.0
-offset_bottom = 110.0
+offset_bottom = 111.0
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-text = "A page to log into itch.io should have opened in your browser. If it didn't click the button below."
 autowrap_mode = 2
 
 [node name="LinkButton" type="LinkButton" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Loading"
+text = "Error"
 underline = 2
 
 [node name="Login check" type="Timer" parent="."]

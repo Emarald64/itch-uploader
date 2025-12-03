@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://drtm83jnndibl"]
+[gd_scene load_steps=3 format=3 uid="uid://drtm83jnndibl"]
 
 [ext_resource type="Script" uid="uid://cg05vfy6l1vfu" path="res://addons/itchio_uploader/itchio_settings/itch_settings.gd" id="1_axtyh"]
+[ext_resource type="Texture2D" uid="uid://xxo61ghdi30c" path="res://addons/itchio_uploader/FileBrowse.svg" id="2_4tpus"]
 
 [node name="itch settings" type="AcceptDialog"]
 oversampling_override = 1.0
@@ -30,7 +31,7 @@ text = "xanderath"
 
 [node name="Label2" type="Label" parent="GridContainer"]
 layout_mode = 2
-text = "Game Name"
+text = "Game Name in url"
 
 [node name="Game Name" type="TextEdit" parent="GridContainer"]
 unique_name_in_owner = true
@@ -46,5 +47,25 @@ text = "Butler Path"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+text = "/home/agiller/Documents/coding/godot/itch-uploader/addons/itchio_uploader/butler/butler"
+
+[node name="Button" type="Button" parent="GridContainer/Butler Path"]
+custom_minimum_size = Vector2(23, 0)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+grow_horizontal = 0
+grow_vertical = 2
+icon = ExtResource("2_4tpus")
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a File"
+file_mode = 0
+access = 2
 
 [connection signal="confirmed" from="." to="." method="pressedOK"]
+[connection signal="pressed" from="GridContainer/Butler Path/Button" to="FileDialog" method="show"]
+[connection signal="file_selected" from="FileDialog" to="GridContainer/Butler Path" method="set_text"]

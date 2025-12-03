@@ -1,14 +1,9 @@
 @tool
 extends EditorExportPlugin
 
-var butlerPath:String
+var editorPlugin:EditorPlugin
 
-var shouldChangeOptions:=true
-
-var channelVisible:=false
-
-var username:String
-var gameName:String
+const uploadPopup=preload("res://addons/itchio_uploader/upload_progress/upload_progress.tscn")
 
 func _get_export_options(platform: EditorExportPlatform) -> Array[Dictionary]:
 	return [
@@ -42,10 +37,9 @@ func _export_end() -> void:
 	if get_option("Itch.io/Upload to Itch.io"):
 		threadedUploadToButler()
 
-func uploadToButler(path:String,username:String,gameName:String,channel:String,version:="",versionPath:=""):
-	print(butlerPath)
-	print(path)
-	print(username+"/"+gameName+":"+channel)
+func uploadToButler(butlerPath:String,path:String,username:String,gameName:String,channel:String,output:Array[String]=[],version:="",versionPath:="") -> int:
+	#print(path)
+	#print(username+"/"+gameName+":"+channel)
 	var args=["push",path,username+"/"+gameName+":"+channel]
 	if version!=null:
 		args.append('--userversion')
@@ -53,20 +47,21 @@ func uploadToButler(path:String,username:String,gameName:String,channel:String,v
 	elif versionPath!="":
 		args.append("--userversion-file")
 		args.append(versionPath)
-	OS.execute(butlerPath,args)
+	return OS.execute(butlerPath,args,output)
 
 func threadedUploadToButler():
 	var path=ProjectSettings.globalize_path("res://"+get_export_preset().get_export_path())
 	if path.get_extension()!='zip':
 		path=path.get_base_dir()
 	ItchSettings.loadSettingsFromFile()
-	#var output=[]
-	var thread=Thread.new()
-	thread.start(uploadToButler.bind(
-		path,
-		ItchSettings.username,
-		ItchSettings.gameName,
-		get_option("Itch.io/Channel"),
-		ProjectSettings.get_setting("application/config/version") if get_option("Itch.io/Version/Use Godot project version") else "",
-		get_option("Itch.io/Version/Itch.io version file")
-		))
+	var args=["push",path,ItchSettings.username+"/"+ItchSettings.gameName+":"+get_option("Itch.io/Channel")]
+	if get_option("Itch.io/Version/Use Godot project version"):
+		args.append('--userversion')
+		args.append(ProjectSettings.get_setting("application/config/version"))
+	elif get_option("Itch.io/Version/Itch.io version file")!="":
+		args.append("--userversion-file")
+		args.append(get_option("Itch.io/Version/Itch.io version file"))
+	var uploadPipe=OS.execute_with_pipe(ItchSettings.butlerPath,args)
+	var popup=uploadPopup.instantiate()
+	popup.uploadPipe=uploadPipe
+	editorPlugin.add_child(popup)
