@@ -6,3 +6,5 @@
 export_presets.cfg
 
 addons/itchio_uploader/settings
+
+addons/itchio_uploader/butler/
