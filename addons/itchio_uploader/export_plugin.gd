@@ -1,6 +1,8 @@
 @tool
 extends EditorExportPlugin
 
+var butlerPath:String
+
 var shouldChangeOptions:=true
 
 var channelVisible:=false
@@ -24,36 +26,31 @@ func _get_export_options(platform: EditorExportPlatform) -> Array[Dictionary]:
 		}
 	]
 
-func _get_export_option_visibility(platform: EditorExportPlatform, option: String) -> bool:
-	#print('checked visibility')
-	#if option=='Channel':
-		#print('channel '+str(get_option("Upload to Itch.io")))
-		#return get_option("Upload to Itch.io")
-	return true
-
-func _should_update_export_options(platform: EditorExportPlatform) -> bool:
-	if channelVisible!=_get_export_option_visibility(platform,"Channel"):
-		channelVisible=_get_export_option_visibility(platform,"Channel")
-		return true
-	return false 
-
-func changeOptions()->void:
-	print('options should change')
-	shouldChangeOptions=true
-
 func _get_name()->String:
 	return "Itch.io Uploader"
 
 func _export_end() -> void:
-	print('export path: '+get_export_preset().get_export_path())
-	print("channel:"+str(get_option("Channel")))
-	threadedUploadToButler(get_option("Channel"),get_export_preset().get_export_path())
+	#print('export path: '+get_export_preset().get_export_path())
+	#print("channel:"+str(get_option("Channel")))
+	if get_option("Upload to Itch.io"):
+		threadedUploadToButler(get_option("Channel"),ProjectSettings.globalize_path("res://"+get_export_preset().get_export_path()))
 
-func uploadToButler(channel:String,path:String):
-	OS.execute("butler",["push",path,username+"/"+gameName+":"+channel],[],false,true)
+func uploadToButler(path:String,username:String,gameName:String,channel:String,output:Array):
+	print(butlerPath)
+	print(path)
+	print(username+"/"+gameName+":"+channel)
+	OS.execute(butlerPath,["push",path,username+"/"+gameName+":"+channel],output)
 
 func threadedUploadToButler(channel:String,path:String):
 	if path.get_extension()!='zip':
 		path=path.get_base_dir()
+	#print(path)
+	#read settings
+	var file=FileAccess.open('res://addons/itchio_uploader/settings',FileAccess.READ)
+	var username=file.get_line()
+	var gameName=file.get_line()
+	file.close()
+	var output=[]
 	var thread=Thread.new()
-	thread.start(uploadToButler.bind(channel,path))
+	thread.start(uploadToButler.bind(path,username,gameName,channel,output))
+	thread.wait_to_finish()
