@@ -14,17 +14,24 @@ func _ready()->void:
 	butlerLoginPID=butlerLoginPipe['pid']
 	$"Login check".start()
 	await get_tree().create_timer(0.5).timeout
-	var butlerOutput=butlerLoginPipe['stdio'].get_as_text()
-	var urlStartIndex=butlerOutput.find("https://itch.io/")
-	var urlEndIndex=butlerOutput.find(' ',urlStartIndex)
-	var url=butlerOutput.substr(urlStartIndex,urlEndIndex-urlStartIndex)
-	if url=="":
-		$VBoxContainer/LinkButton.text='Error'
-		$VBoxContainer/Label.text=butlerLoginPipe['stdio'].get_as_text()+butlerLoginPipe['stderr'].get_as_text()
+	var commandOutput:String=butlerLoginPipe['stdio'].get_as_text()
+	var butlerOutput=commandOutput.substr(commandOutput.find('\n')+1)
+	#print(butlerOutput)
+	if butlerOutput.begins_with("Your local credentials are valid!"):
+		$VBoxContainer/Label.text="Already loged into itch.io"
+		
+		print("Already loged into itch.io")
 	else:
-		$VBoxContainer/LinkButton.text='Link'
-		$VBoxContainer/LinkButton.url=url
-		$VBoxContainer/LinkButton.underline=LinkButton.UnderlineMode.UNDERLINE_MODE_ALWAYS
+		var urlStartIndex=butlerOutput.find("https://itch.io/")
+		var urlEndIndex=butlerOutput.find(' ',urlStartIndex)
+		var url=butlerOutput.substr(urlStartIndex,urlEndIndex-urlStartIndex)
+		if url=="":
+			$VBoxContainer/LinkButton.text='Error'
+			$VBoxContainer/Label.text=butlerLoginPipe['stdio'].get_as_text()+butlerLoginPipe['stderr'].get_as_text()
+		else:
+			$VBoxContainer/LinkButton.text='Link'
+			$VBoxContainer/LinkButton.url=url
+			$VBoxContainer/LinkButton.underline=LinkButton.UnderlineMode.UNDERLINE_MODE_ALWAYS
 
 func checkLogin()->void:
 	if not OS.is_process_running(butlerLoginPID):
