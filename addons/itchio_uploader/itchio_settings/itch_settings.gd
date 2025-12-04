@@ -12,11 +12,21 @@ signal settingsUpdated
 
 static func _static_init() -> void:
 	loadSettingsFromFile()
+	if butlerPath.is_empty():
+		#try to find if butler is preinstalled
+		var exitStatus=OS.execute("butler",['-V'])
+		print("exit status:"+str(exitStatus))
+		if exitStatus!=127:
+			print('updated butler path')
+			butlerPath="butler"
+	saveSettingsToFile()
+		
 
 func _ready() -> void:
 	%Username.text=username
 	%"Game Name".text=gameName
 	%"Butler Path".text=butlerPath
+	print('path'+butlerPath)
 
 static func loadSettingsFromFile()->void:
 	# Read exising settings

@@ -12,8 +12,6 @@ func _process(delta: float) -> void:
 	if thread!=null:
 		if not thread.is_alive():
 			thread.wait_to_finish()
-			if OS.get_name()!='Windows':
-				FileAccess.set_unix_permissions(butlerFolder+'butler',FileAccess.UNIX_EXECUTE_OWNER)
 			queue_free()
 	if butlerDownload!=null and not extracting:
 		%ProgressBar.max_value=butlerDownload.get_body_size()
@@ -35,7 +33,7 @@ func startDownload()->void:
 		"Linux":
 			osURLName="linux-amd64"
 	var url=baseURL.format([osURLName])
-	print(url)
+	#print(url)
 	var request=HTTPRequest.new()
 	add_child(request)
 	request.request_completed.connect(linkDownloaded)
@@ -44,7 +42,7 @@ func startDownload()->void:
 		print("An error occured finding where to download butler")
 
 func linkDownloaded(result, response_code, headers, body:PackedByteArray)->void:
-	print(headers)
+	#print(headers)
 	headers[6]
 	#var responce=body.get_string_from_utf8()
 	#print(responce)
@@ -99,6 +97,11 @@ func extractionThread(zipFilePath:String,progressBar:ProgressBar)->void:
 		print('extracted '+zipFile)
 		call_deferred('increaseProgressBar')
 	zipReader.close()
+
+	if OS.get_name()!='Windows':
+		FileAccess.set_unix_permissions(butlerFolder+'butler',FileAccess.UNIX_EXECUTE_OWNER)
+	
+	DirAccess.remove_absolute(zipFilePath)
 	
 
 func increaseProgressBar()->void:

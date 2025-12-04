@@ -18,6 +18,7 @@ const butlerDownloadPopup=preload('res://addons/itchio_uploader/butler_downloade
 	#pass
 
 func _enter_tree() -> void:
+	ItchSettings.loadSettingsFromFile()
 	exportPlugin=preload("res://addons/itchio_uploader/export_plugin.gd").new()
 	exportPlugin.editorPlugin=self
 	add_export_plugin(exportPlugin)
@@ -37,6 +38,7 @@ func openSettings()->void:
 
 func _exit_tree() -> void:
 	# Clean-up of the plugin goes here.
+	ItchSettings.saveSettingsToFile()
 	remove_tool_menu_item("Log into itch.io")
 	remove_tool_menu_item("Itch.io Project Settings")
 	remove_tool_menu_item("Download Butler")
