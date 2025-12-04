@@ -25,9 +25,10 @@ func _enter_tree() -> void:
 	add_tool_menu_item("Log into itch.io",addInstance.bind(itchLoginPopup))
 	add_tool_menu_item("Itch.io Project Settings",addInstance.bind(itchSettingsPopup))
 	add_tool_menu_item("Download Butler",addInstance.bind(butlerDownloadPopup))
-	
-	dock=preload('res://addons/itchio_uploader/itchio_statuses/itchio_statuses.tscn').instantiate()
-	add_control_to_dock(EditorPlugin.DOCK_SLOT_RIGHT_UL,dock)
+	if not ItchSettings.username.is_empty() and not ItchSettings.gameName.is_empty():
+		# Enable Statuses
+		dock=preload('res://addons/itchio_uploader/itchio_statuses/itchio_statuses.tscn').instantiate()
+		add_control_to_bottom_panel(dock,"Itch.io Statuses")
 
 
 func _exit_tree() -> void:
@@ -36,7 +37,16 @@ func _exit_tree() -> void:
 	remove_tool_menu_item("Itch.io Project Settings")
 	remove_tool_menu_item("Download Butler")
 	remove_export_plugin(exportPlugin)
-	remove_control_from_docks(dock)
+	if dock!=null:
+		remove_control_from_bottom_panel(dock)
+		dock.queue_free()
+
+
+func on_updated_itch_settings()->void:
+	if not ItchSettings.username.is_empty() and not ItchSettings.gameName.is_empty():
+		# Enable Statuses
+		dock=preload('res://addons/itchio_uploader/itchio_statuses/itchio_statuses.tscn').instantiate()
+		add_control_to_bottom_panel(dock,"Itch.io Statuses")
 
 func addInstance(scene:PackedScene)->void:
 	add_child(scene.instantiate())

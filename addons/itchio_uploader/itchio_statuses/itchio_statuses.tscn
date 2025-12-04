@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://ckb8dsahbr7w0"]
+[gd_scene load_steps=7 format=3 uid="uid://ckb8dsahbr7w0"]
 
 [ext_resource type="Script" uid="uid://rbxrr8ekkj3j" path="res://addons/itchio_uploader/itchio_statuses/itchio_statuses.gd" id="1_cdtwi"]
+[ext_resource type="Texture2D" uid="uid://s1dcg0d2vpac" path="res://addons/itchio_uploader/assets/ExternalLink.svg" id="2_461kv"]
+[ext_resource type="Texture2D" uid="uid://c6mkducx37xdd" path="res://addons/itchio_uploader/assets/Reload.svg" id="3_uo1i7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mmv22"]
 content_margin_left = 2.0
@@ -15,27 +17,42 @@ bg_color = Color(0.15294118, 0.15294118, 0.15294118, 1)
 [sub_resource type="Theme" id="Theme_mmv22"]
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_cdtwi")
 
-[node name="Itchio Statuses" type="VBoxContainer"]
-offset_right = 68.0
-offset_bottom = 35.0
+[node name="Itchio Statuses" type="HBoxContainer"]
+offset_right = 301.0
+offset_bottom = 276.0
 size_flags_horizontal = 3
+theme_override_constants/separation = 8
 script = ExtResource("1_cdtwi")
 
-[node name="Game Page" type="LinkButton" parent="."]
+[node name="HBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
-size_flags_horizontal = 4
-text = "Itch.io page"
-uri = "xanderath.itch.io/test"
+theme_override_constants/separation = 8
 
-[node name="Refresh" type="Button" parent="."]
+[node name="openItch" type="Button" parent="HBoxContainer"]
 layout_mode = 2
-text = "Refresh"
+size_flags_horizontal = 3
+text = "Itch.io"
+icon = ExtResource("2_461kv")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="Refresh" type="Button" parent="HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+text = "Reload"
+icon = ExtResource("3_uo1i7")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="GridBackground" type="PanelContainer" parent="ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_mmv22")
 
-[node name="Grid" type="GridContainer" parent="PanelContainer"]
+[node name="Grid" type="GridContainer" parent="ScrollContainer/GridBackground"]
 unique_name_in_owner = true
 layout_mode = 2
 theme = SubResource("Theme_mmv22")
@@ -43,4 +60,5 @@ theme_override_constants/h_separation = 2
 theme_override_constants/v_separation = 2
 columns = 4
 
-[connection signal="pressed" from="Refresh" to="." method="refreshStatus"]
+[connection signal="pressed" from="HBoxContainer/openItch" to="." method="openGamePage"]
+[connection signal="pressed" from="HBoxContainer/Refresh" to="." method="refreshStatus"]

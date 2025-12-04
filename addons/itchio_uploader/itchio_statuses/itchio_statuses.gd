@@ -3,10 +3,9 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$"Game Page".uri="https://"+ItchSettings.username+".itch.io/"+ItchSettings.gameName
 	var base_color:Color=EditorInterface.get_editor_settings().get_setting('interface/theme/base_color')
 	%Grid.theme.get_stylebox('panel','PanelContainer').bg_color=base_color
-	$PanelContainer.get_theme_stylebox("panel").bg_color=base_color.lightened(.2)
+	%GridBackground.get_theme_stylebox("panel").bg_color=base_color.lightened(.2)
 	refreshStatus()
 
 func refreshStatus()->void:
@@ -26,3 +25,8 @@ func refreshStatus()->void:
 			container.size_flags_horizontal=SIZE_EXPAND_FILL
 			container.add_child(label)
 			%Grid.add_child(container)
+
+
+func openGamePage() -> void:
+	OS.shell_open("https://"+ItchSettings.username+".itch.io/"+ItchSettings.gameName)
+	

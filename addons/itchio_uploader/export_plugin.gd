@@ -28,9 +28,6 @@ func _get_export_options(platform: EditorExportPlatform) -> Array[Dictionary]:
 func _get_name()->String:
 	return "Itch.io Uploader"
 
-#func _export_begin(features: PackedStringArray, is_debug: bool, path: String, flags: int) -> void:
-	#print(get_option("Itch.io/Itch.io version file"))
-
 func _export_end() -> void:
 	if get_option("Itch.io/Upload to Itch.io"):
 		if ItchSettings.butlerPath.is_empty():

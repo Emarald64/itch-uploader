@@ -16,7 +16,7 @@ func _process(delta: float) -> void:
 			print('closed progress')
 			queue_free()
 		var newtext:String=uploadPipe['stdio'].get_as_text()
-		if not newtext.is_empty(): print(newtext)
+		if not newtext.is_empty(): prints(newtext)
 		$VBoxContainer/Label.text+=newtext
 		$VBoxContainer/Errors.text+=uploadPipe['stderr'].get_as_text()
 
