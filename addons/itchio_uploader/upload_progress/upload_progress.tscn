@@ -9,6 +9,7 @@ initial_position = 4
 size = Vector2i(200, 131)
 visible = true
 exclusive = false
+minimize_disabled = false
 cancel_button_text = "Cancel Upload"
 script = ExtResource("1_d35nn")
 
@@ -25,9 +26,5 @@ grow_vertical = 2
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-
-[node name="Errors" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.31, 0.31, 1)
 
 [connection signal="canceled" from="." to="." method="_on_canceled"]

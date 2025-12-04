@@ -1,5 +1,5 @@
 @tool
-extends Window
+extends ConfirmationDialog
 
 var uploadPipe:Dictionary
 
@@ -16,9 +16,18 @@ func _process(delta: float) -> void:
 			print('closed progress')
 			queue_free()
 		var newtext:String=uploadPipe['stdio'].get_as_text()
-		if not newtext.is_empty(): prints(newtext)
+		#if not newtext.is_empty(): prints(newtext)
 		$VBoxContainer/Label.text+=newtext
+		var error:String=uploadPipe['stderr'].get_as_text()
+		if not error.is_empty():
+			if not $VBoxContainer.has_node("Error"):
+				var errorLabel=Label.new()
+				errorLabel.name='Error'
+				errorLabel.add_theme_color_override("font_color",Color.DARK_RED)
+				$VBoxContainer.add_child(errorLabel)
 		$VBoxContainer/Errors.text+=uploadPipe['stderr'].get_as_text()
+		if not OS.is_process_running(uploadPipe['pid']):
+			get_cancel_button().hide()
 
 
 func _on_canceled() -> void:
