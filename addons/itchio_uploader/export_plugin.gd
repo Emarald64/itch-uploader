@@ -29,29 +29,10 @@ func _get_name()->String:
 	return "Itch.io Uploader"
 
 func _export_end() -> void:
-	if get_option("Itch.io/Upload to Itch.io"):
-		if ItchSettings.butlerPath.is_empty():
-			push_error("Butler path is not set. Press the install butler button in the tools menu or set the path to butler in the Itch.io project settings")
-		elif not FileAccess.file_exists(ItchSettings.butlerPath):
-			push_error("There is no file at the path for Butler. Press the install butler button in the tools menu or set the path to butler in the Itch.io project settings")
-		elif OS.get_name()!="Windows" and FileAccess.get_unix_permissions(ItchSettings.butlerPath)&(FileAccess.UNIX_EXECUTE_OWNER+FileAccess.UNIX_EXECUTE_GROUP+FileAccess.UNIX_EXECUTE_OTHER)==0:
-			push_error("You do not have permission to execute butler. Run `chmod +x "+ItchSettings.butlerPath+"`")
-		else:
-			threadedUploadToButler()
+	if get_option("Itch.io/Upload to Itch.io") and ItchSettings.areSettingsComplete():
+		uploadToButler()
 
-func uploadToButler(butlerPath:String,path:String,username:String,gameName:String,channel:String,output:Array[String]=[],version:="",versionPath:="") -> int:
-	#print(path)
-	#print(username+"/"+gameName+":"+channel)
-	var args=["push",path,username+"/"+gameName+":"+channel]
-	if version!=null:
-		args.append('--userversion')
-		args.append(version)
-	elif versionPath!="":
-		args.append("--userversion-file")
-		args.append(versionPath)
-	return OS.execute(butlerPath,args,output)
-
-func threadedUploadToButler():
+func uploadToButler():
 	var path=ProjectSettings.globalize_path("res://"+get_export_preset().get_export_path())
 	if path.get_extension()!='zip':
 		path=path.get_base_dir()

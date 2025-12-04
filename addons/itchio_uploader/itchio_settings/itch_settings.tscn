@@ -7,7 +7,7 @@
 oversampling_override = 1.0
 title = "Itch.io Settings"
 initial_position = 4
-size = Vector2i(300, 134)
+size = Vector2i(500, 134)
 visible = true
 dialog_close_on_escape = false
 script = ExtResource("1_axtyh")
@@ -15,7 +15,7 @@ script = ExtResource("1_axtyh")
 [node name="GridContainer" type="GridContainer" parent="."]
 offset_left = 8.0
 offset_top = 8.0
-offset_right = 292.0
+offset_right = 492.0
 offset_bottom = 85.0
 columns = 2
 
@@ -47,7 +47,7 @@ text = "Butler Path"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-text = "/home/agiller/Documents/coding/godot/itch-uploader/addons/itchio_uploader/butler/butler"
+text = "/home/agiller/Documents/butler-linux-amd64/butler"
 
 [node name="Button" type="Button" parent="GridContainer/Butler Path"]
 custom_minimum_size = Vector2(23, 0)

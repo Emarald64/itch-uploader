@@ -29,4 +29,3 @@ func refreshStatus()->void:
 
 func openGamePage() -> void:
 	OS.shell_open("https://"+ItchSettings.username+".itch.io/"+ItchSettings.gameName)
-	
