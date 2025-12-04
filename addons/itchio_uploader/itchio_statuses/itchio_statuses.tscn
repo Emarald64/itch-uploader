@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://ckb8dsahbr7w0"]
+
+[ext_resource type="Script" uid="uid://rbxrr8ekkj3j" path="res://addons/itchio_uploader/itchio_statuses/itchio_statuses.gd" id="1_cdtwi"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mmv22"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.32235295, 0.32235295, 0.32235295, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cdtwi"]
+bg_color = Color(0.15294118, 0.15294118, 0.15294118, 1)
+
+[sub_resource type="Theme" id="Theme_mmv22"]
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_cdtwi")
+
+[node name="Itchio Statuses" type="VBoxContainer"]
+offset_right = 68.0
+offset_bottom = 35.0
+size_flags_horizontal = 3
+script = ExtResource("1_cdtwi")
+
+[node name="Game Page" type="LinkButton" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Itch.io page"
+uri = "xanderath.itch.io/test"
+
+[node name="Refresh" type="Button" parent="."]
+layout_mode = 2
+text = "Refresh"
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_mmv22")
+
+[node name="Grid" type="GridContainer" parent="PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = SubResource("Theme_mmv22")
+theme_override_constants/h_separation = 2
+theme_override_constants/v_separation = 2
+columns = 4
+
+[connection signal="pressed" from="Refresh" to="." method="refreshStatus"]

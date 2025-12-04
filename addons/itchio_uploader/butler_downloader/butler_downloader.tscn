@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://vyw23l71d4j7"]
+
+[node name="ButlerDownloader" type="Window"]
+oversampling_override = 1.0
