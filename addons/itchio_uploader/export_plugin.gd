@@ -20,7 +20,7 @@ func _get_export_options(platform: EditorExportPlatform) -> Array[Dictionary]:
 			"default_value":true,
 		},
 		{
-			"option":{"name":"Itch.io/Version/Version file","type":Variant.Type.TYPE_STRING,"hint":PROPERTY_HINT_FILE_PATH},
+			"option":{"name":"Itch.io/Version/Version file","type":Variant.Type.TYPE_STRING,"hint":PROPERTY_HINT_FILE},
 			"default_value":"",
 		}
 	]

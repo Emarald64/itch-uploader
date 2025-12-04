@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://drtm83jnndibl"]
 
 [ext_resource type="Script" uid="uid://cg05vfy6l1vfu" path="res://addons/itchio_uploader/itchio_settings/itch_settings.gd" id="1_axtyh"]
-[ext_resource type="Texture2D" uid="uid://xxo61ghdi30c" path="res://addons/itchio_uploader/FileBrowse.svg" id="2_4tpus"]
+[ext_resource type="Texture2D" uid="uid://xxo61ghdi30c" path="res://addons/itchio_uploader/assets/FileBrowse.svg" id="2_4tpus"]
 
 [node name="itch settings" type="AcceptDialog"]
 oversampling_override = 1.0
@@ -47,7 +47,7 @@ text = "Butler Path"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-text = "/home/agiller/Documents/butler-linux-amd64/butler"
+text = "butler"
 
 [node name="Button" type="Button" parent="GridContainer/Butler Path"]
 custom_minimum_size = Vector2(23, 0)
