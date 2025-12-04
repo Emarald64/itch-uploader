@@ -1,4 +1,39 @@
-[gd_scene format=3 uid="uid://vyw23l71d4j7"]
+[gd_scene load_steps=2 format=3 uid="uid://vyw23l71d4j7"]
+
+[ext_resource type="Script" uid="uid://dkqgjco53hswq" path="res://addons/itchio_uploader/butler_downloader/butler_downloader.gd" id="1_ximit"]
 
 [node name="ButlerDownloader" type="Window"]
 oversampling_override = 1.0
+title = "Downloading Butler"
+initial_position = 4
+size = Vector2i(177, 100)
+wrap_controls = true
+transient = true
+maximize_disabled = true
+script = ExtResource("1_ximit")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Current Step" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Starting download"
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+step = 1.0
+
+[node name="Progress" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0B/0B"
+horizontal_alignment = 2
+
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]
