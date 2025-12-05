@@ -47,4 +47,5 @@ func uploadToButler():
 	var uploadPipe=OS.execute_with_pipe(ItchSettings.butlerPath,args)
 	var popup=uploadPopup.instantiate()
 	popup.uploadPipe=uploadPipe
+	popup.channel=get_option("Itch.io/Channel")
 	editorPlugin.add_child(popup)

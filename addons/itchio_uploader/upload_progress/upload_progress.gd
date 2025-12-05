@@ -4,6 +4,8 @@ extends ConfirmationDialog
 var uploadPipe:Dictionary
 @onready var output: Label = $VBoxContainer/Output
 var done:=false
+var isError:=false
+var channel:String
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -17,6 +19,7 @@ func _process(delta: float) -> void:
 		var error:String=uploadPipe['stderr'].get_as_text()
 		if not error.is_empty():
 			if not $VBoxContainer.has_node("Error"):
+				isError=true
 				var errorLabel=Label.new()
 				errorLabel.name='Error'
 				errorLabel.add_theme_color_override("font_color",Color.DARK_RED)
@@ -26,12 +29,10 @@ func _process(delta: float) -> void:
 			# upload finished
 			get_cancel_button().hide()
 			done=true
-			itchStatus.uploadedGames.set(getUploadId(output.text),Time.get_unix_time_from_system())
+			if not isError:
+				itchStatus.uploadedGames.set(channel,Time.get_unix_time_from_system())
 	elif done and not visible:
 		queue_free()
-func getUploadId(uploadOutput:String):
-	print(uploadOutput)
-
 func _on_canceled() -> void:
 	if uploadPipe!=null:
 		OS.kill(uploadPipe['pid'])
