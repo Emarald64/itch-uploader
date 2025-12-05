@@ -12,6 +12,10 @@ content_margin_bottom = 2.0
 bg_color = Color(0.32235295, 0.32235295, 0.32235295, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cdtwi"]
+content_margin_left = 0.0
+content_margin_top = 3.0
+content_margin_right = 0.0
+content_margin_bottom = 3.0
 bg_color = Color(0.15294118, 0.15294118, 0.15294118, 1)
 
 [sub_resource type="Theme" id="Theme_mmv22"]
@@ -60,6 +64,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_mmv22")
 
 [node name="Grid" type="GridContainer" parent="ScrollContainer/GridBackground"]
 unique_name_in_owner = true
+texture_filter = 2
 layout_mode = 2
 theme = SubResource("Theme_mmv22")
 theme_override_constants/h_separation = 2
