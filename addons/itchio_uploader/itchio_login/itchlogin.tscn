@@ -30,3 +30,15 @@ text = "Loading"
 underline = 2
 
 [node name="Login check" type="Timer" parent="."]
+
+[node name="LogOutConfirm" type="ConfirmationDialog" parent="."]
+oversampling_override = 1.0
+title = "Log Out"
+initial_position = 4
+size = Vector2i(200, 106)
+ok_button_text = "Yes"
+dialog_text = "Are you SURE you want to log out"
+dialog_autowrap = true
+cancel_button_text = "No"
+
+[connection signal="confirmed" from="LogOutConfirm" to="." method="logout"]

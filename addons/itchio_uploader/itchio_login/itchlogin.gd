@@ -1,8 +1,6 @@
 @tool
 extends AcceptDialog
 
-var butlerPath:="/home/agiller/Documents/butler-linux-amd64/butler"
-
 @onready var status: Label = $VBoxContainer/Status
 @onready var link: LinkButton = $VBoxContainer/Link
 
@@ -14,9 +12,9 @@ func _ready()->void:
 	
 	var butlerLoginPipe:Dictionary
 	if OS.get_name()=="Windows":
-		butlerLoginPipe=OS.execute_with_pipe(butlerPath,['login'])
+		butlerLoginPipe=OS.execute_with_pipe(ItchSettings.butlerPath,['login'])
 	else:
-		butlerLoginPipe=OS.execute_with_pipe('/usr/bin/script',['-c',butlerPath+' login','/dev/null'])
+		butlerLoginPipe=OS.execute_with_pipe('/usr/bin/script',['-c',ItchSettings.butlerPath+' login','/dev/null'])
 	butlerLoginPID=butlerLoginPipe['pid']
 	$"Login check".start()
 	await get_tree().create_timer(0.5).timeout
@@ -25,7 +23,11 @@ func _ready()->void:
 	
 	if butlerOutput.begins_with("Your local credentials are valid!"):
 		status.text="Already loged into itch.io"
-		
+		var logoutButton=Button.new()
+		logoutButton.text="Log Out"
+		logoutButton.pressed.connect($LogOutConfirm.show)
+		$VBoxContainer.add_child(logoutButton)
+		link.queue_free()
 		print("Already loged into itch.io")
 	else:
 		var urlStartIndex=butlerOutput.find("https://itch.io/")
@@ -35,9 +37,16 @@ func _ready()->void:
 			link.text='Error'
 			status.text=butlerLoginPipe['stdio'].get_as_text()+butlerLoginPipe['stderr'].get_as_text()
 		else:
+			status.text="A page should have opened in your browser to log into itch.io. If it hasn't, click the link below"
 			link.text='Link'
-			link.url=url
+			link.uri=url
 			link.underline=LinkButton.UnderlineMode.UNDERLINE_MODE_ALWAYS
+
+func logout()->void:
+	var output=[]
+	OS.execute(ItchSettings.butlerPath,['logout','--assume-yes'],output)
+	print(output)
+	queue_free()
 
 func checkLogin()->void:
 	if not OS.is_process_running(butlerLoginPID):

@@ -31,7 +31,7 @@ func _ready() -> void:
 	usernameEntry.text=username
 	gameNameEntry.text=gameName
 	butlerPathEntry.text=butlerPath
-	print('path'+butlerPath)
+	#print('path'+butlerPath)
 
 static func loadSettingsFromFile()->void:
 	# Read exising settings
