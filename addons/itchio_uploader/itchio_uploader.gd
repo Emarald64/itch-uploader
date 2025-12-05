@@ -11,6 +11,7 @@ var dock:Control
 const itchLoginPopup=preload("res://addons/itchio_uploader/itchio_login/itchlogin.tscn")
 const itchSettingsPopup=preload("res://addons/itchio_uploader/itchio_settings/itch_settings.tscn")
 const butlerDownloadPopup=preload('res://addons/itchio_uploader/butler_downloader/butler_downloader.tscn')
+const statusDock=preload('uid://ckb8dsahbr7w0')
 #func _enable_plugin() -> void:
 	#pass
 #
@@ -28,7 +29,8 @@ func _enter_tree() -> void:
 	add_tool_menu_item("Download Butler",addInstance.bind(butlerDownloadPopup))
 	if not ItchSettings.username.is_empty() or not ItchSettings.gameName.is_empty():
 		# Enable Statuses
-		dock=preload('res://addons/itchio_uploader/itchio_statuses/itchio_statuses.tscn').instantiate()
+		itchStatus.loadChannels()
+		dock=statusDock.instantiate()
 		add_control_to_bottom_panel(dock,"Itch.io Statuses")
 
 func openSettings()->void:
@@ -44,6 +46,7 @@ func _exit_tree() -> void:
 	remove_tool_menu_item("Download Butler")
 	remove_export_plugin(exportPlugin)
 	if dock!=null:
+		itchStatus.saveChannels()
 		remove_control_from_bottom_panel(dock)
 		dock.queue_free()
 
@@ -52,7 +55,7 @@ func on_updated_itch_settings()->void:
 	print('updated settings')
 	if ItchSettings.areSettingsComplete():
 		# Enable Statuses
-		dock=preload('res://addons/itchio_uploader/itchio_statuses/itchio_statuses.tscn').instantiate()
+		dock=statusDock.instantiate()
 		add_control_to_bottom_panel(dock,"Itch.io Statuses")
 	elif dock!=null:
 		remove_control_from_bottom_panel(dock)

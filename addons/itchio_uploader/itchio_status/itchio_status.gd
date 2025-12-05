@@ -2,6 +2,8 @@
 extends Control
 class_name itchStatus
 
+const channelsFilePath='res://addons/itchio_uploader/channels.csv'
+
 static var uploadedGames:=Dictionary()
 
 @onready var grid: GridContainer = %Grid
@@ -42,7 +44,7 @@ func refreshStatus()->void:
 				1:
 					if currentRow>0:
 						if uploadedGames.has(currentChannel):
-							formattedText=Time.get_time_string_from_unix_time(uploadedGames.get(currentChannel))
+							formattedText=uploadedGames.get(currentChannel)[1]
 						else:
 							formattedText="unknown"
 					else:
@@ -71,19 +73,31 @@ func refreshStatus()->void:
 			
 			grid.add_child(panel)
 
-#static func formatTime(time:int) -> String:
-	#return str(time/3600)+':'+str((time/60)%60).pad_zeros(2)+":"+str(time%60).pad_zeros(2)
-
 static func getChannelIcon(channelName:String)->Texture2D:
-	if "web" in channelName:
+	print(uploadedGames)
+	var osName=uploadedGames[channelName][0] if uploadedGames.has(channelName) else ""
+	if osName=="Web" or "web" in channelName:
 		return preload("res://addons/itchio_uploader/assets/html.svg")
-	elif "win" in channelName:
+	elif osName=="Windows" or "win" in channelName:
 		return preload("res://addons/itchio_uploader/assets/windows.svg")
-	elif "mac" in channelName:
-		return preload("res://addons/itchio_uploader/assets/macos.svg")
-	elif "linux" in channelName:
+	elif osName=="Linux" or "linux" in channelName:
 		return preload("res://addons/itchio_uploader/assets/linux.svg")
+	elif osName=="MacOS" or "mac" in channelName:
+		return preload("res://addons/itchio_uploader/assets/macos.svg")
 	return null
 
 func openGamePage() -> void:
 	OS.shell_open("https://"+ItchSettings.username+".itch.io/"+ItchSettings.gameName)
+
+static func loadChannels()->void:
+	var file=FileAccess.open(channelsFilePath,FileAccess.READ)
+	while not file.eof_reached():
+		var line:=file.get_csv_line()
+		uploadedGames.set(line[0],line.slice(1))
+
+static func saveChannels()->void:
+	var file=FileAccess.open(channelsFilePath,FileAccess.WRITE)
+	for key in uploadedGames.keys():
+		var channel=uploadedGames.get(key).duplicate()
+		channel.insert(0,key)
+		file.store_csv_line(channel)

@@ -33,11 +33,12 @@ func _export_end() -> void:
 		uploadToButler()
 
 func uploadToButler():
+	var channel=get_option("Itch.io/Channel")
 	var path=ProjectSettings.globalize_path("res://"+get_export_preset().get_export_path())
 	if path.get_extension()!='zip':
 		path=path.get_base_dir()
 	ItchSettings.loadSettingsFromFile()
-	var args=["push",path,ItchSettings.username+"/"+ItchSettings.gameName+":"+get_option("Itch.io/Channel")]
+	var args=["push",path,ItchSettings.username+"/"+ItchSettings.gameName+":"+channel]
 	if get_option("Itch.io/Version/Use Godot project version"):
 		args.append('--userversion')
 		args.append(ProjectSettings.get_setting("application/config/version"))
@@ -45,7 +46,15 @@ func uploadToButler():
 		args.append("--userversion-file")
 		args.append(get_option("Itch.io/Version/Itch.io version file"))
 	var uploadPipe=OS.execute_with_pipe(ItchSettings.butlerPath,args)
+	print('starting channelinfo stuff')
+	if itchStatus.uploadedGames.has(channel):
+		itchStatus.uploadedGames.get(channel).set(0,get_export_platform().get_os_name())
+	else:
+		var channelInfo=PackedStringArray()
+		channelInfo.set(0,get_export_platform().get_os_name())
+		itchStatus.uploadedGames.set(channel,channelInfo)
+	print('finshed channelinfo stuff')
 	var popup=uploadPopup.instantiate()
 	popup.uploadPipe=uploadPipe
-	popup.channel=get_option("Itch.io/Channel")
+	popup.channel=channel
 	editorPlugin.add_child(popup)

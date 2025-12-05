@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://ckb8dsahbr7w0"]
 
-[ext_resource type="Script" uid="uid://rbxrr8ekkj3j" path="res://addons/itchio_uploader/itchio_statuses/itchio_statuses.gd" id="1_cdtwi"]
+[ext_resource type="Script" uid="uid://rbxrr8ekkj3j" path="res://addons/itchio_uploader/itchio_status/itchio_status.gd" id="1_cdtwi"]
 [ext_resource type="Texture2D" uid="uid://s1dcg0d2vpac" path="res://addons/itchio_uploader/assets/ExternalLink.svg" id="2_461kv"]
 [ext_resource type="Texture2D" uid="uid://c6mkducx37xdd" path="res://addons/itchio_uploader/assets/Reload.svg" id="3_uo1i7"]
 

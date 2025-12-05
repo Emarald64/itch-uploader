@@ -30,7 +30,10 @@ func _process(delta: float) -> void:
 			get_cancel_button().hide()
 			done=true
 			if not isError:
-				itchStatus.uploadedGames.set(channel,Time.get_unix_time_from_system())
+				if len(itchStatus.uploadedGames.get(channel))>1:
+					itchStatus.uploadedGames.get(channel).set(1,Time.get_datetime_string_from_system())
+				else:
+					itchStatus.uploadedGames.get(channel).append(Time.get_datetime_string_from_system())
 	elif done and not visible:
 		queue_free()
 func _on_canceled() -> void:

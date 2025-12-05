@@ -8,5 +8,6 @@ export_presets.cfg
 addons/itchio_uploader/butler/
 
 addons/itchio_uploader/settings.txt
+addons/itchio_uploader/channels.csv
 
 addons/godot_super-wakatime
