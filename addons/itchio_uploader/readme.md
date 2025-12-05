@@ -1,6 +1,10 @@
+![icon](/addons/itchio_uploader/icon.svg)
+
 # Itchio Uploader
 
-Automaticlly upload your Godot exports to Itch.io
+A plugin for the Godot Editor which automaticlly upload your Godot exports to Itch.io
+
+Made for week 14 of siege
 
 ## How to use:
 
@@ -14,4 +18,4 @@ or input the path to your exisiting butler instilation if its not on the path
     The game name should be one used in the url of the project 
     Ex. username.itch.io/game-name
 
-4. When exporting the game in the export settings there will be new settings to allow you to enter a channel name or disable uploads
+4. When exporting the game in the bottom of the export options, there will be new option to allow you to enter a channel name or disable uploads

@@ -63,3 +63,8 @@ func on_updated_itch_settings()->void:
 func addInstance(scene:PackedScene)->void:
 	add_child(scene.instantiate())
 	
+func _get_plugin_name() -> String:
+	return "Itch.io Uploader"
+
+func _get_plugin_icon() -> Texture2D:
+	return preload("uid://btib8xi7csxop")
