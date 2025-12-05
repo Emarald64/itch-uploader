@@ -47,7 +47,7 @@ text = "Butler Path"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-text = "/home/agiller/Documents/godot/itch-uploader/addons/itchio_uploader/butler/butler"
+text = "butler"
 
 [node name="Button" type="Button" parent="GridContainer/Butler Path"]
 custom_minimum_size = Vector2(23, 0)

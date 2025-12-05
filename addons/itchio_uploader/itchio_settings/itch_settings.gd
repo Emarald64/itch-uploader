@@ -17,15 +17,13 @@ signal settingsUpdated
 
 static func _static_init() -> void:
 	loadSettingsFromFile()
-	if butlerPath.is_empty():
-		#try to find if butler is preinstalled
-		var exitStatus=OS.execute("butler",['-V'])
-		print("exit status:"+str(exitStatus))
-		if exitStatus!=127:
-			print('updated butler path')
-			butlerPath="butler"
-	saveSettingsToFile()
+	if butlerPath.is_empty() and butlerExists('butler'):
+		butlerPath="butler"
+		saveSettingsToFile()
 		
+
+static func butlerExists(path:String)->bool:
+	return OS.execute(path,['-V'])==OK
 
 func _ready() -> void:
 	usernameEntry.text=username
@@ -56,9 +54,9 @@ static func areSettingsComplete()->bool:
 static func validateButlerPath()->bool:
 	if butlerPath.is_empty():
 		push_warning("Butler path is not set. Press the install butler button in the tools menu or set the path to butler in the Itch.io project settings")
-	elif not FileAccess.file_exists(butlerPath):
+	elif (not butlerExists(butlerPath)):
 		push_warning("There is no file at the path for Butler. Press the install butler button in the tools menu or set the path to butler in the Itch.io project settings")
-	elif OS.get_name()!="Windows" and FileAccess.get_unix_permissions(butlerPath)&(FileAccess.UNIX_EXECUTE_OWNER+FileAccess.UNIX_EXECUTE_GROUP+FileAccess.UNIX_EXECUTE_OTHER)==0:
+	elif OS.get_name()!="Windows" and butlerPath!='butler' and FileAccess.get_unix_permissions(butlerPath)&(FileAccess.UNIX_EXECUTE_OWNER+FileAccess.UNIX_EXECUTE_GROUP+FileAccess.UNIX_EXECUTE_OTHER)==0:
 		push_warning("You do not have permission to execute butler. Run `chmod +x "+butlerPath+"`")
 	else:
 		return true

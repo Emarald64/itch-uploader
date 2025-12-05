@@ -100,7 +100,7 @@ func extractionThread(zipFilePath:String,progressBar:ProgressBar)->void:
 	zipReader.close()
 
 	if OS.get_name()!='Windows':
-		FileAccess.set_unix_permissions(butlerFolder+'butler',FileAccess.UNIX_EXECUTE_OWNER)
+		FileAccess.set_unix_permissions(butlerFolder+'butler',(7<<6)|(5<<3)|5)
 	
 	DirAccess.remove_absolute(zipFilePath)
 	
