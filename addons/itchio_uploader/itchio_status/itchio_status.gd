@@ -2,7 +2,7 @@
 extends Control
 class_name itchStatus
 
-const channelsFilePath='res://addons/itchio_uploader/channels.csv'
+const channelsFilePath='res://addons/itchio_uploader/channels'
 
 static var uploadedGames:=Dictionary()
 
@@ -43,7 +43,7 @@ func refreshStatus()->void:
 						icon=getChannelIcon(currentChannel)
 				1:
 					if currentRow>0:
-						if uploadedGames.has(currentChannel):
+						if uploadedGames.has(currentChannel) and len(uploadedGames.get(currentChannel))>1:
 							formattedText=uploadedGames.get(currentChannel)[1]
 						else:
 							formattedText="unknown"
@@ -74,7 +74,7 @@ func refreshStatus()->void:
 			grid.add_child(panel)
 
 static func getChannelIcon(channelName:String)->Texture2D:
-	print(uploadedGames)
+	#print(uploadedGames)
 	var osName=uploadedGames[channelName][0] if uploadedGames.has(channelName) else ""
 	if osName=="Web" or "web" in channelName:
 		return preload("res://addons/itchio_uploader/assets/html.svg")
@@ -90,10 +90,11 @@ func openGamePage() -> void:
 	OS.shell_open("https://"+ItchSettings.username+".itch.io/"+ItchSettings.gameName)
 
 static func loadChannels()->void:
-	var file=FileAccess.open(channelsFilePath,FileAccess.READ)
-	while not file.eof_reached():
-		var line:=file.get_csv_line()
-		uploadedGames.set(line[0],line.slice(1))
+	if FileAccess.file_exists(channelsFilePath):
+		var file=FileAccess.open(channelsFilePath,FileAccess.READ)
+		while not file.eof_reached():
+			var line:=file.get_csv_line()
+			uploadedGames.set(line[0],line.slice(1))
 
 static func saveChannels()->void:
 	var file=FileAccess.open(channelsFilePath,FileAccess.WRITE)

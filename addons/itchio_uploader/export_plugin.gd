@@ -46,14 +46,12 @@ func uploadToButler():
 		args.append("--userversion-file")
 		args.append(get_option("Itch.io/Version/Itch.io version file"))
 	var uploadPipe=OS.execute_with_pipe(ItchSettings.butlerPath,args)
-	print('starting channelinfo stuff')
 	if itchStatus.uploadedGames.has(channel):
 		itchStatus.uploadedGames.get(channel).set(0,get_export_platform().get_os_name())
 	else:
 		var channelInfo=PackedStringArray()
-		channelInfo.set(0,get_export_platform().get_os_name())
+		channelInfo.append(get_export_platform().get_os_name())
 		itchStatus.uploadedGames.set(channel,channelInfo)
-	print('finshed channelinfo stuff')
 	var popup=uploadPopup.instantiate()
 	popup.uploadPipe=uploadPipe
 	popup.channel=channel
