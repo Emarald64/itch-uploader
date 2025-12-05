@@ -1,10 +1,15 @@
 @tool
 extends Control
+class_name itchStatus
+
+static var uploadedGames:=Dictionary()
+
+@onready var grid: GridContainer = %Grid
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var base_color:Color=EditorInterface.get_editor_settings().get_setting('interface/theme/base_color')
-	%Grid.theme.get_stylebox('panel','PanelContainer').bg_color=base_color
+	grid.theme.get_stylebox('panel','PanelContainer').bg_color=base_color
 	%GridBackground.get_theme_stylebox("panel").bg_color=base_color.lightened(.2)
 	refreshStatus()
 
@@ -15,7 +20,7 @@ func refreshStatus()->void:
 	while thread.is_alive():
 		await get_tree().process_frame
 	thread.wait_to_finish()
-	for child in %Grid.get_children():
+	for child in grid.get_children():
 		child.free()
 	for box in output[0].split("|").slice(1):
 		if not box.begins_with('\n'):
@@ -24,7 +29,7 @@ func refreshStatus()->void:
 			var container=PanelContainer.new()
 			container.size_flags_horizontal=SIZE_EXPAND_FILL
 			container.add_child(label)
-			%Grid.add_child(container)
+			grid.add_child(container)
 
 
 func openGamePage() -> void:

@@ -19,7 +19,8 @@ func _process(delta: float) -> void:
 		%Progress.text=String.humanize_size(butlerDownload.get_downloaded_bytes())+'/'+String.humanize_size(butlerDownload.get_body_size())
 
 func _ready()->void:
-	startDownload()
+	if get_parent() is not SubViewport:
+		startDownload()
 
 func startDownload()->void:
 	const baseURL='https://broth.itch.zone/butler/{0}/LATEST/archive/default'

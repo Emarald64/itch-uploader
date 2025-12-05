@@ -24,7 +24,7 @@ offset_bottom = -49.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="Output" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 
 [connection signal="canceled" from="." to="." method="_on_canceled"]

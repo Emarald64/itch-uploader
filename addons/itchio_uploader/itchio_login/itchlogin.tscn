@@ -19,12 +19,12 @@ offset_top = 8.0
 offset_right = 492.0
 offset_bottom = 71.0
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="Status" type="Label" parent="VBoxContainer"]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 autowrap_mode = 2
 
-[node name="LinkButton" type="LinkButton" parent="VBoxContainer"]
+[node name="Link" type="LinkButton" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Loading"

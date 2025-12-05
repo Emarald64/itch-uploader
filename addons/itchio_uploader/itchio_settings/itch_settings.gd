@@ -8,6 +8,11 @@ static var username:=""
 static var gameName:=""
 static var butlerPath:=""
 
+@onready var usernameEntry: TextEdit = %Username
+@onready var gameNameEntry: TextEdit = %"Game Name"
+@onready var butlerPathEntry: TextEdit = %"Butler Path"
+
+
 signal settingsUpdated
 
 static func _static_init() -> void:
@@ -23,9 +28,9 @@ static func _static_init() -> void:
 		
 
 func _ready() -> void:
-	%Username.text=username
-	%"Game Name".text=gameName
-	%"Butler Path".text=butlerPath
+	usernameEntry.text=username
+	gameNameEntry.text=gameName
+	butlerPathEntry.text=butlerPath
 	print('path'+butlerPath)
 
 static func loadSettingsFromFile()->void:
@@ -60,8 +65,8 @@ static func validateButlerPath()->bool:
 	return false
 
 func pressedOK()->void:
-	username=%Username.text
-	gameName=%"Game Name".text
-	butlerPath=%"Butler Path".text
+	username=usernameEntry.text
+	gameName=gameNameEntry.text
+	butlerPath=butlerPathEntry.text
 	saveSettingsToFile()
 	settingsUpdated.emit()

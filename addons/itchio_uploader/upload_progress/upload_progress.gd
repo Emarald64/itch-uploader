@@ -2,22 +2,18 @@
 extends ConfirmationDialog
 
 var uploadPipe:Dictionary
-
-# Called when the node enters the scene tree for the first time.
-#func _ready() -> void:
-	#print('created progress popup')
-	#print(get_parent().name)
-
+@onready var output: Label = $VBoxContainer/Output
+var done:=false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if not uploadPipe.is_empty():
+	if not uploadPipe.is_empty() and not done:
 		if not visible and OS.is_process_running(uploadPipe['pid']):
 			print('closed progress')
 			queue_free()
 		var newtext:String=uploadPipe['stdio'].get_as_text()
 		#if not newtext.is_empty(): prints(newtext)
-		$VBoxContainer/Label.text+=newtext
+		output.text+=newtext
 		var error:String=uploadPipe['stderr'].get_as_text()
 		if not error.is_empty():
 			if not $VBoxContainer.has_node("Error"):
@@ -25,10 +21,16 @@ func _process(delta: float) -> void:
 				errorLabel.name='Error'
 				errorLabel.add_theme_color_override("font_color",Color.DARK_RED)
 				$VBoxContainer.add_child(errorLabel)
-		$VBoxContainer/Errors.text+=uploadPipe['stderr'].get_as_text()
+			$VBoxContainer/Error.text+=error
 		if not OS.is_process_running(uploadPipe['pid']):
+			# upload finished
 			get_cancel_button().hide()
-
+			done=true
+			itchStatus.uploadedGames.set(getUploadId(output.text),Time.get_unix_time_from_system())
+	elif done and not visible:
+		queue_free()
+func getUploadId(uploadOutput:String):
+	print(uploadOutput)
 
 func _on_canceled() -> void:
 	if uploadPipe!=null:
