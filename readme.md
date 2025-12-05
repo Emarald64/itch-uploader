@@ -1,6 +1,6 @@
 ![icon](/addons/itchio_uploader/icon.svg)
 
-# Itchio Uploader
+# Itch.io Uploader
 
 A plugin for the Godot Editor which automaticlly upload your Godot exports to Itch.io
 
