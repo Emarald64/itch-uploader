@@ -17,7 +17,7 @@ signal settingsUpdated
 
 static func _static_init() -> void:
 	loadSettingsFromFile()
-	if butlerPath.is_empty() and butlerExists('butler'):
+	if butlerPath.is_empty() and OS.get_name()!="Windows" and butlerExists('butler'):
 		butlerPath="butler"
 		saveSettingsToFile()
 		

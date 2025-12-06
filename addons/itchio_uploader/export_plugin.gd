@@ -17,7 +17,7 @@ func _get_export_options(platform: EditorExportPlatform) -> Array[Dictionary]:
 		},
 		{
 			"option":{"name":"Itch.io/Version/Use Godot project version","type":Variant.Type.TYPE_BOOL},
-			"default_value":true,
+			"default_value":false,
 		},
 		{
 			"option":{"name":"Itch.io/Version/Version file","type":Variant.Type.TYPE_STRING,"hint":PROPERTY_HINT_FILE},
@@ -42,9 +42,9 @@ func uploadToButler():
 	if get_option("Itch.io/Version/Use Godot project version"):
 		args.append('--userversion')
 		args.append(ProjectSettings.get_setting("application/config/version"))
-	elif get_option("Itch.io/Version/Itch.io version file")!="":
+	elif not get_option("Itch.io/Version/Version file").is_empty():
 		args.append("--userversion-file")
-		args.append(get_option("Itch.io/Version/Itch.io version file"))
+		args.append(get_option("Itch.io/Version/Version file"))
 	var uploadPipe=OS.execute_with_pipe(ItchSettings.butlerPath,args)
 	if itchStatus.uploadedGames.has(channel):
 		itchStatus.uploadedGames.get(channel).set(0,get_export_platform().get_os_name())
