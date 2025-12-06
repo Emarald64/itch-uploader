@@ -11,10 +11,14 @@ func _ready()->void:
 		return
 	
 	var butlerLoginPipe:Dictionary
-	if OS.get_name()=="Windows":
-		butlerLoginPipe=OS.execute_with_pipe(ItchSettings.butlerPath,['login'])
-	else:
-		butlerLoginPipe=OS.execute_with_pipe('/usr/bin/script',['-c',ItchSettings.butlerPath+' login','/dev/null'])
+	match OS.get_name():
+		"Windows":
+			butlerLoginPipe=OS.execute_with_pipe(ItchSettings.butlerPath,['login'])
+		"Linux":
+			butlerLoginPipe=OS.execute_with_pipe('script',['-c',ItchSettings.butlerPath+' login','/dev/null'])
+		"macOS":
+			butlerLoginPipe=OS.execute_with_pipe('script',['/dev/null', ItchSettings.butlerPath+' login'])
+		
 	butlerLoginPID=butlerLoginPipe['pid']
 	$"Login check".start()
 	await get_tree().create_timer(0.5).timeout

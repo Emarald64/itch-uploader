@@ -29,7 +29,7 @@ func startDownload()->void:
 		"Windows":
 			# screw it, assume 64-bits :,(
 			osURLName='windows-amd64'
-		"MacOS":
+		"macOS":
 			osURLName='darwin-amd64'
 		"Linux":
 			osURLName="linux-amd64"
@@ -43,13 +43,17 @@ func startDownload()->void:
 		print("An error occured finding where to download butler")
 
 func linkDownloaded(result, response_code, headers, body:PackedByteArray)->void:
-	#print(headers)
-	headers[6]
-	#var responce=body.get_string_from_utf8()
-	#print(responce)
-	var urlStart=headers[6].find("http")
-	#var urlEnd=headers[6].find("\"",urlStart+1)
-	var url=headers[6].substr(urlStart)
+	print(headers)
+	var url
+	for header:String in headers:
+		if header.begins_with("Location"):
+			var urlStart=header.find("http")
+			var urlEnd=header.find("\"",urlStart+1)
+			url=header.substr(urlStart)
+			print(urlStart,urlEnd)
+			break
+	#headers[6]
+	print(url)
 	%"Current Step".text="Downloading Butler"
 	butlerDownload=HTTPRequest.new()
 	add_child(butlerDownload)
