@@ -11,7 +11,7 @@ var channel:String
 func _process(delta: float) -> void:
 	if not uploadPipe.is_empty() and not done:
 		if not visible and OS.is_process_running(uploadPipe['pid']):
-			print('closed progress')
+			#print('closed progress')
 			queue_free()
 		var newtext:String=uploadPipe['stdio'].get_as_text()
 		#if not newtext.is_empty(): prints(newtext)
@@ -40,4 +40,4 @@ func _on_canceled() -> void:
 	if uploadPipe!=null:
 		OS.kill(uploadPipe['pid'])
 	queue_free()
-	print('closed progress')
+	#print('closed progress')

@@ -43,17 +43,17 @@ func startDownload()->void:
 		print("An error occured finding where to download butler")
 
 func linkDownloaded(result, response_code, headers, body:PackedByteArray)->void:
-	print(headers)
+	#print(headers)
 	var url
 	for header:String in headers:
 		if header.begins_with("Location"):
 			var urlStart=header.find("http")
 			var urlEnd=header.find("\"",urlStart+1)
 			url=header.substr(urlStart)
-			print(urlStart,urlEnd)
+			#print(urlStart,urlEnd)
 			break
 	#headers[6]
-	print(url)
+	#print(url)
 	%"Current Step".text="Downloading Butler"
 	butlerDownload=HTTPRequest.new()
 	add_child(butlerDownload)
@@ -63,7 +63,7 @@ func linkDownloaded(result, response_code, headers, body:PackedByteArray)->void:
 		print("An error occured downloading butler")
 
 func downloadFinished(result, response_code, headers, body)->void:
-	print('downloaded butler')
+	#print('downloaded butler')
 	const zipFilePath=butlerFolder+'butler.zip'
 	if not DirAccess.dir_exists_absolute(butlerFolder):
 		DirAccess.make_dir_absolute(butlerFolder)

@@ -25,7 +25,7 @@ func refreshStatus()->void:
 		await get_tree().process_frame
 	thread.wait_to_finish()
 	%Loading.hide()
-	print(output[0])
+	#print(output[0])
 	for child in grid.get_children():
 		child.free()
 	if has_node('ScrollContainer/error'):
