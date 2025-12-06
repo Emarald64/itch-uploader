@@ -25,9 +25,19 @@ func refreshStatus()->void:
 		await get_tree().process_frame
 	thread.wait_to_finish()
 	%Loading.hide()
-	#print(output[0])
+	print(output[0])
 	for child in grid.get_children():
 		child.free()
+	if has_node('ScrollContainer/error'):
+		$ScrollContainer/error.free()
+	$ScrollContainer/GridBackground.show()
+	if output[0].begins_with("No channel"):
+		$ScrollContainer/GridBackground.hide()
+		var label=Label.new()
+		label.text="No channels found, upload from the plugin to add a channel"
+		label.name='error'
+		$ScrollContainer.add_child(label)
+		return
 	var currentCol:=-1
 	var currentRow:=0
 	var currentChannel:String="none"
