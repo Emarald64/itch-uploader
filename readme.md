@@ -1,6 +1,6 @@
 ![icon](/addons/itchio_uploader/icon.svg)
 
-# Itch.io Uploader
+# Itchio Uploader
 
 A plugin for the Godot Editor which automaticlly upload your Godot exports to Itch.io
 
@@ -12,6 +12,8 @@ Made for week 14 of siege
 or input the path to your exisiting butler instilation if its not on the path
 
 2. Log into itch.io in butler if you aren't already using Project>Tools>Log into itch.io
+	On macOS, logging in through the editor does not work and you must log in through the terminal with the command
+	`path/to/butler login`
 
 3. Enter your Username and game name in the Project>Tools>Itch.io Settings menu
 
