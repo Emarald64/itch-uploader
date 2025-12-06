@@ -6,6 +6,18 @@ A plugin for the Godot Editor which automaticlly upload your Godot exports to It
 
 Made for week 14 of siege
 
+## Demo Video
+
+[Youtube - Itch.io Uploader Showcase](https://youtu.be/CQJputfS4Fg)
+
+## Installation
+
+Download from the [game's page on the Godot Asset Library](https://godotengine.org/asset-library/asset/4549)
+
+or
+
+Download as zip from Github by clicking Code>Download ZIP
+
 ## How to use:
 
 1. Download Butler using the download butler option in Project>Tools>Download butler
