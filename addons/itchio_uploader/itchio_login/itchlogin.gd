@@ -51,7 +51,7 @@ func _ready()->void:
 func logout()->void:
 	var output=[]
 	OS.execute(ItchSettings.butlerPath,['logout','--assume-yes'],output)
-	print(output)
+	#print(output)
 	queue_free()
 
 func checkLogin()->void:
