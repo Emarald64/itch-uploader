@@ -17,10 +17,11 @@ func _ready()->void:
 		"Linux":
 			butlerLoginPipe=OS.execute_with_pipe('script',['-c',ItchSettings.butlerPath+' login','/dev/null'])
 		"macOS":
-			butlerLoginPipe=OS.execute_with_pipe('script',['/dev/null', ItchSettings.butlerPath+' login'])
-		
+			print("Log in from Godot does not work on macOS, open a terminal and enter \n\n"+ItchSettings.butlerPath+" login")
+			queue_free()
+			return
 	butlerLoginPID=butlerLoginPipe['pid']
-	$"Login check".start()
+	#$"Login check".start()
 	await get_tree().create_timer(0.5).timeout
 	var commandOutput:String=butlerLoginPipe['stdio'].get_as_text()
 	var butlerOutput=commandOutput.substr(commandOutput.find('\n')+1)
@@ -38,6 +39,7 @@ func _ready()->void:
 		var urlEndIndex=butlerOutput.find(' ',urlStartIndex)
 		var url=butlerOutput.substr(urlStartIndex,urlEndIndex-urlStartIndex)
 		if url=="":
+			print(commandOutput)
 			link.text='Error'
 			status.text=butlerLoginPipe['stdio'].get_as_text()+butlerLoginPipe['stderr'].get_as_text()
 		else:

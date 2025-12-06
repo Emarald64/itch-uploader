@@ -4,7 +4,7 @@
 
 [node name="Itch io login" type="AcceptDialog"]
 oversampling_override = 1.0
-title = "itch.io login"
+title = "Itch.io login"
 initial_position = 4
 size = Vector2i(500, 120)
 visible = true
@@ -30,6 +30,7 @@ text = "Loading"
 underline = 2
 
 [node name="Login check" type="Timer" parent="."]
+autostart = true
 
 [node name="LogOutConfirm" type="ConfirmationDialog" parent="."]
 oversampling_override = 1.0
