@@ -2,7 +2,7 @@
 
 # Itchio Uploader
 
-A plugin for the Godot Editor which automaticlly upload your Godot exports to Itch.io
+A plugin for the Godot Editor which automaticlly uploads your Godot exports to Itch.io
 
 Made for week 14 of siege
 
