@@ -13,6 +13,7 @@ Made for week 14 of siege
 ## Installation
 
 Download from the [game's page on the Godot Asset Library](https://godotengine.org/asset-library/asset/4549)
+or in the Godot editor by searching for `Itch.io Uploader`
 
 or
 
